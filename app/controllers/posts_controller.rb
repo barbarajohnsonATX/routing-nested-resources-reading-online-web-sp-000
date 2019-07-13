@@ -1,12 +1,21 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all
+    #get posts of an author if an author_id is in params
+    #ex: authors/:id/posts
+    #params[author_id] is provided through nested route
+    if params[:author_id]
+      @posts = Author.find(params[:author_id]).posts
+    #get all posts 
+    else
+      @posts = Post.all
+    end
   end
-
+ 
   def show
     @post = Post.find(params[:id])
   end
+  
 
   def new
     @post = Post.new
